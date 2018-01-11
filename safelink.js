@@ -1,97 +1,97 @@
 var Base64 = {<br />
-    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",<br />
-    encode: function (input) {<br />
-        var output = "";<br />
-        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;<br />
-        var i = 0;<br />
-        input = Base64._utf8_encode(input);<br />
-        while (i < input.length) {<br />
-            chr1 = input.charCodeAt(i++);<br />
-            chr2 = input.charCodeAt(i++);<br />
-            chr3 = input.charCodeAt(i++);<br />
-            enc1 = chr1 >> 2;<br />
-            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);<br />
-            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);<br />
-            enc4 = chr3 & 63;<br />
-            if (isNaN(chr2)) {<br />
-                enc3 = enc4 = 64;<br />
-            } else if (isNaN(chr3)) {<br />
-                enc4 = 64;<br />
-            }<br />
-            output = output + this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) + this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);<br />
-        }<br />
-        return output;<br />
-    },<br />
-    decode: function (input) {<br />
-        var output = "";<br />
-        var chr1, chr2, chr3;<br />
-        var enc1, enc2, enc3, enc4;<br />
-        var i = 0;<br />
-        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");<br />
-        while (i < input.length) {<br />
-            enc1 = this._keyStr.indexOf(input.charAt(i++));<br />
-            enc2 = this._keyStr.indexOf(input.charAt(i++));<br />
-            enc3 = this._keyStr.indexOf(input.charAt(i++));<br />
-            enc4 = this._keyStr.indexOf(input.charAt(i++));<br />
-            chr1 = (enc1 << 2) | (enc2 >> 4);<br />
-            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);<br />
-            chr3 = ((enc3 & 3) << 6) | enc4;<br />
-            output = output + String.fromCharCode(chr1);<br />
-            if (enc3 != 64) {<br />
-                output = output + String.fromCharCode(chr2);<br />
-            }<br />
-            if (enc4 != 64) {<br />
-                output = output + String.fromCharCode(chr3);<br />
-            }<br />
-        }<br />
-        output = Base64._utf8_decode(output);<br />
-        return output;<br />
-    },<br />
-    _utf8_encode: function (string) {<br />
-        string = string.replace(/\r\n/g, "\n");<br />
-        var utftext = "";<br />
-        for (var n = 0; n < string.length; n++) {<br />
-            var c = string.charCodeAt(n);<br />
-            if (c < 128) {<br />
-                utftext += String.fromCharCode(c);<br />
-            } else if ((c > 127) && (c < 2048)) {<br />
-                utftext += String.fromCharCode((c >> 6) | 192);<br />
-                utftext += String.fromCharCode((c & 63) | 128);<br />
-            } else {<br />
-                utftext += String.fromCharCode((c >> 12) | 224);<br />
-                utftext += String.fromCharCode(((c >> 6) & 63) | 128);<br />
-                utftext += String.fromCharCode((c & 63) | 128);<br />
-            }<br />
-        }<br />
-        return utftext;<br />
-    },<br />
-    _utf8_decode: function (utftext) {<br />
-        var string = "";<br />
-        var i = 0;<br />
-        var c = c1 = c2 = 0;<br />
-        while (i < utftext.length) {<br />
-            c = utftext.charCodeAt(i);<br />
-            if (c < 128) {<br />
-                string += String.fromCharCode(c);<br />
-                i++;<br />
-            } else if ((c > 191) && (c < 224)) {<br />
-                c2 = utftext.charCodeAt(i + 1);<br />
-                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));<br />
-                i += 2;<br />
-            } else {<br />
-                c2 = utftext.charCodeAt(i + 1);<br />
-                c3 = utftext.charCodeAt(i + 2);<br />
-                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));<br />
-                i += 3;<br />
-            }<br />
-        }<br />
-        return string;<br />
-    }<br />
+Â  Â  _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",<br />
+Â  Â  encode: function (input) {<br />
+Â  Â  Â  Â  var output = "";<br />
+Â  Â  Â  Â  var chr1, chr2, chr3, enc1, enc2, enc3, enc4;<br />
+Â  Â  Â  Â  var i = 0;<br />
+Â  Â  Â  Â  input = Base64._utf8_encode(input);<br />
+Â  Â  Â  Â  while (i < input.length) {<br />
+Â  Â  Â  Â  Â  Â  chr1 = input.charCodeAt(i++);<br />
+Â  Â  Â  Â  Â  Â  chr2 = input.charCodeAt(i++);<br />
+Â  Â  Â  Â  Â  Â  chr3 = input.charCodeAt(i++);<br />
+Â  Â  Â  Â  Â  Â  enc1 = chr1 >> 2;<br />
+Â  Â  Â  Â  Â  Â  enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);<br />
+Â  Â  Â  Â  Â  Â  enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);<br />
+Â  Â  Â  Â  Â  Â  enc4 = chr3 & 63;<br />
+Â  Â  Â  Â  Â  Â  if (isNaN(chr2)) {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  enc3 = enc4 = 64;<br />
+Â  Â  Â  Â  Â  Â  } else if (isNaN(chr3)) {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  enc4 = 64;<br />
+Â  Â  Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  Â  Â  output = output + this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) + this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);<br />
+Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  return output;<br />
+Â  Â  },<br />
+Â  Â  decode: function (input) {<br />
+Â  Â  Â  Â  var output = "";<br />
+Â  Â  Â  Â  var chr1, chr2, chr3;<br />
+Â  Â  Â  Â  var enc1, enc2, enc3, enc4;<br />
+Â  Â  Â  Â  var i = 0;<br />
+Â  Â  Â  Â  input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");<br />
+Â  Â  Â  Â  while (i < input.length) {<br />
+Â  Â  Â  Â  Â  Â  enc1 = this._keyStr.indexOf(input.charAt(i++));<br />
+Â  Â  Â  Â  Â  Â  enc2 = this._keyStr.indexOf(input.charAt(i++));<br />
+Â  Â  Â  Â  Â  Â  enc3 = this._keyStr.indexOf(input.charAt(i++));<br />
+Â  Â  Â  Â  Â  Â  enc4 = this._keyStr.indexOf(input.charAt(i++));<br />
+Â  Â  Â  Â  Â  Â  chr1 = (enc1 << 2) | (enc2 >> 4);<br />
+Â  Â  Â  Â  Â  Â  chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);<br />
+Â  Â  Â  Â  Â  Â  chr3 = ((enc3 & 3) << 6) | enc4;<br />
+Â  Â  Â  Â  Â  Â  output = output + String.fromCharCode(chr1);<br />
+Â  Â  Â  Â  Â  Â  if (enc3 != 64) {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  output = output + String.fromCharCode(chr2);<br />
+Â  Â  Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  Â  Â  if (enc4 != 64) {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  output = output + String.fromCharCode(chr3);<br />
+Â  Â  Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  output = Base64._utf8_decode(output);<br />
+Â  Â  Â  Â  return output;<br />
+Â  Â  },<br />
+Â  Â  _utf8_encode: function (string) {<br />
+Â  Â  Â  Â  string = string.replace(/\r\n/g, "\n");<br />
+Â  Â  Â  Â  var utftext = "";<br />
+Â  Â  Â  Â  for (var n = 0; n < string.length; n++) {<br />
+Â  Â  Â  Â  Â  Â  var c = string.charCodeAt(n);<br />
+Â  Â  Â  Â  Â  Â  if (c < 128) {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  utftext += String.fromCharCode(c);<br />
+Â  Â  Â  Â  Â  Â  } else if ((c > 127) && (c < 2048)) {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  utftext += String.fromCharCode((c >> 6) | 192);<br />
+Â  Â  Â  Â  Â  Â  Â  Â  utftext += String.fromCharCode((c & 63) | 128);<br />
+Â  Â  Â  Â  Â  Â  } else {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  utftext += String.fromCharCode((c >> 12) | 224);<br />
+Â  Â  Â  Â  Â  Â  Â  Â  utftext += String.fromCharCode(((c >> 6) & 63) | 128);<br />
+Â  Â  Â  Â  Â  Â  Â  Â  utftext += String.fromCharCode((c & 63) | 128);<br />
+Â  Â  Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  return utftext;<br />
+Â  Â  },<br />
+Â  Â  _utf8_decode: function (utftext) {<br />
+Â  Â  Â  Â  var string = "";<br />
+Â  Â  Â  Â  var i = 0;<br />
+Â  Â  Â  Â  var c = c1 = c2 = 0;<br />
+Â  Â  Â  Â  while (i < utftext.length) {<br />
+Â  Â  Â  Â  Â  Â  c = utftext.charCodeAt(i);<br />
+Â  Â  Â  Â  Â  Â  if (c < 128) {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  string += String.fromCharCode(c);<br />
+Â  Â  Â  Â  Â  Â  Â  Â  i++;<br />
+Â  Â  Â  Â  Â  Â  } else if ((c > 191) && (c < 224)) {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  c2 = utftext.charCodeAt(i + 1);<br />
+Â  Â  Â  Â  Â  Â  Â  Â  string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));<br />
+Â  Â  Â  Â  Â  Â  Â  Â  i += 2;<br />
+Â  Â  Â  Â  Â  Â  } else {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  c2 = utftext.charCodeAt(i + 1);<br />
+Â  Â  Â  Â  Â  Â  Â  Â  c3 = utftext.charCodeAt(i + 2);<br />
+Â  Â  Â  Â  Â  Â  Â  Â  string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));<br />
+Â  Â  Â  Â  Â  Â  Â  Â  i += 3;<br />
+Â  Â  Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  return string;<br />
+Â  Â  }<br />
 }<br />
 var encode = document.getElementById('encode'),<br />
-    decode = document.getElementById('decode'),<br />
-    output = document.getElementById('output'),<br />
-    input = document.getElementById('input');<br />
+Â  Â  decode = document.getElementById('decode'),<br />
+Â  Â  output = document.getElementById('output'),<br />
+Â  Â  input = document.getElementById('input');<br />
 var User_ID = "";<br />
 var protected_links = "";<br />
 var a_to_va = 0;<br />
@@ -99,57 +99,57 @@ var a_to_vb = 0;<br />
 var a_to_vc = "";<br />
 <br />
 function auto_safelink() {<br />
-    auto_safeconvert();<br />
+Â  Â  auto_safeconvert();<br />
 }<br />
 <br />
 function auto_safeconvert() {<br />
-    var a_to_vd = window.location.hostname;<br />
-    if (protected_links != "" && !protected_links.match(a_to_vd)) {<br />
-        protected_links += ", " + a_to_vd;<br />
-    } else if (protected_links == "") {<br />
-        protected_links = a_to_vd;<br />
-    }<br />
-    var a_to_ve = "";<br />
-    var a_to_vf = new Array();<br />
-    var a_to_vg = 0;<br />
-    a_to_ve = document.getElementsByTagName("a");<br />
-    a_to_va = a_to_ve.length;<br />
-    a_to_vf = a_to_fa();<br />
-    a_to_vg = a_to_vf.length;<br />
-    var a_to_vh = false;<br />
-    var j = 0;<br />
-    var a_to_vi = "";<br />
-    for (var i = 0; i < a_to_va; i++) {<br />
-        a_to_vh = false;<br />
-        j = 0;<br />
-        while (a_to_vh == false && j < a_to_vg) {<br />
-            a_to_vi = a_to_ve[i].href;<br />
-            if (a_to_vi.match(a_to_vf[j]) || !a_to_vi || !a_to_vi.match("http")) {<br />
-                a_to_vh = true;<br />
-            }<br />
-            j++;<br />
-        }<br />
-        if (a_to_vh == false) {<br />
-            var encryptedUrl = Base64.encode(a_to_vi);<br />
-            a_to_ve[i].href = "https://www.mbahhanif.site/p/safelink_11.html?url=" + encryptedUrl;<br />
-            a_to_ve[i].rel = "nofollow";<br />
-            a_to_vb++;<br />
-            a_to_vc += i + ":::" + a_to_ve[i].href + "\n";<br />
-        }<br />
-    }<br />
-    var a_to_vj = document.getElementById("anonyminized");<br />
-    var a_to_vk = document.getElementById("found_links");<br />
-    if (a_to_vj) {<br />
-        a_to_vj.innerHTML += a_to_vb;<br />
-    }<br />
-    if (a_to_vk) {<br />
-        a_to_vk.innerHTML += a_to_va;<br />
-    }<br />
+Â  Â  var a_to_vd = window.location.hostname;<br />
+Â  Â  if (protected_links != "" && !protected_links.match(a_to_vd)) {<br />
+Â  Â  Â  Â  protected_links += ", " + a_to_vd;<br />
+Â  Â  } else if (protected_links == "") {<br />
+Â  Â  Â  Â  protected_links = a_to_vd;<br />
+Â  Â  }<br />
+Â  Â  var a_to_ve = "";<br />
+Â  Â  var a_to_vf = new Array();<br />
+Â  Â  var a_to_vg = 0;<br />
+Â  Â  a_to_ve = document.getElementsByTagName("a");<br />
+Â  Â  a_to_va = a_to_ve.length;<br />
+Â  Â  a_to_vf = a_to_fa();<br />
+Â  Â  a_to_vg = a_to_vf.length;<br />
+Â  Â  var a_to_vh = false;<br />
+Â  Â  var j = 0;<br />
+Â  Â  var a_to_vi = "";<br />
+Â  Â  for (var i = 0; i < a_to_va; i++) {<br />
+Â  Â  Â  Â  a_to_vh = false;<br />
+Â  Â  Â  Â  j = 0;<br />
+Â  Â  Â  Â  while (a_to_vh == false && j < a_to_vg) {<br />
+Â  Â  Â  Â  Â  Â  a_to_vi = a_to_ve[i].href;<br />
+Â  Â  Â  Â  Â  Â  if (a_to_vi.match(a_to_vf[j]) || !a_to_vi || !a_to_vi.match("http")) {<br />
+Â  Â  Â  Â  Â  Â  Â  Â  a_to_vh = true;<br />
+Â  Â  Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  Â  Â  j++;<br />
+Â  Â  Â  Â  }<br />
+Â  Â  Â  Â  if (a_to_vh == false) {<br />
+Â  Â  Â  Â  Â  Â  var encryptedUrl = Base64.encode(a_to_vi);<br />
+Â  Â  Â  Â  Â  Â  a_to_ve[i].href = "http://www.mbahhanif.site/p/safelink.html?url=" + encryptedUrl;<br />
+Â  Â  Â  Â  Â  Â  a_to_ve[i].rel = "nofollow";<br />
+Â  Â  Â  Â  Â  Â  a_to_vb++;<br />
+Â  Â  Â  Â  Â  Â  a_to_vc += i + ":::" + a_to_ve[i].href + "\n";<br />
+Â  Â  Â  Â  }<br />
+Â  Â  }<br />
+Â  Â  var a_to_vj = document.getElementById("anonyminized");<br />
+Â  Â  var a_to_vk = document.getElementById("found_links");<br />
+Â  Â  if (a_to_vj) {<br />
+Â  Â  Â  Â  a_to_vj.innerHTML += a_to_vb;<br />
+Â  Â  }<br />
+Â  Â  if (a_to_vk) {<br />
+Â  Â  Â  Â  a_to_vk.innerHTML += a_to_va;<br />
+Â  Â  }<br />
 }<br />
 <br />
 function a_to_fa() {<br />
-    var a_to_vf = new Array();<br />
-    protected_links = protected_links.replace(" ", "");<br />
-    a_to_vf = protected_links.split(",");<br />
-    return a_to_vf;<br />
+Â  Â  var a_to_vf = new Array();<br />
+Â  Â  protected_links = protected_links.replace(" ", "");<br />
+Â  Â  a_to_vf = protected_links.split(",");<br />
+Â  Â  return a_to_vf;<br />
 }
